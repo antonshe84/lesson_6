@@ -29,15 +29,15 @@ if __name__ == '__main__':
         with open("hobby.csv", "r", encoding="utf-8") as hobby_file:
             with open("users_hobby.json", "w+", encoding="utf-8") as j:
                 j.writelines("{")
-                user_0 = users_file.readline().replace(",", " ").replace("\n", "")
-                hobby_0 = hobby_file.readline().replace("\n", "")
-                while user_0:
+                user_0 = users_file.readline().replace("\n", "").split(",")
+                hobby_0 = hobby_file.readline().replace("\n", "").split(",")
+                while user_0 != ['']:
                     j.writelines(f'"{user_0}": "{hobby_0}"')
-                    user_0 = users_file.readline().replace(",", " ").replace("\n", "")
-                    hobby_0 = hobby_file.readline().replace("\n", "")
-                    if user_0 == "" and hobby_0 != "": sys.exit(1)
-                    if hobby_0 == "": hobby_0 = "None"
-                    if user_0 and hobby_0: j.writelines(", ")
+                    user_0 = users_file.readline().replace("\n", "").split(",")
+                    hobby_0 = hobby_file.readline().replace("\n", "").split(",")
+                    if user_0 == [''] and hobby_0 != ['']: sys.exit(1)
+                    if hobby_0 == ['']: hobby_0 = ["None"]
+                    if user_0 != [''] and hobby_0 != ['']: j.writelines(", ")
 
                 j.writelines("}")
 
