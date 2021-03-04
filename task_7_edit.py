@@ -28,15 +28,8 @@ import sys
 
 if __name__ == '__main__':
     args = sys.argv
-    with open("bakery.csv", "r", encoding="utf-8") as f:
-        if len(args) == 1:
-            for r in f.readlines():
-                print(r.replace("\n", ""))
-        elif len(args) == 2:
+    with open("bakery.csv", "r+", encoding="utf-8") as f:
+        if len(args) == 3:
             f.seek(11*(int(args[1]) - 1))
-            for r in f.readlines():
-                print(r.replace("\n", ""))
-        elif len(args) == 3:
-            f.seek(11 * (int(args[1]) - 1))
-            for r in f.readlines()[:int(args[2]) - int(args[1]) + 1]:
-                print(r.replace("\n", ""))
+            f.writelines([f"{float(args[2]):9.2f}\n"])
+            print(f"Сумма {float(args[2]):9.2f} записана под номером {args[1]}")

@@ -8,4 +8,20 @@
 числу, включительно.
 """
 
+import sys
 
+if __name__ == '__main__':
+    args = sys.argv
+    with open("bakery.csv", "r", encoding="utf-8") as f:
+        if len(args) == 1:
+            for s in f.readlines():
+                s = s.replace("\n", "")
+                print(float(s))
+        elif len(args) == 2:
+            for s in f.readlines()[int(args[1]) - 1:]:
+                s = s.replace("\n", "")
+                print(float(s))
+        elif len(args) == 3:
+            for s in f.readlines()[int(args[1]) - 1:int(args[2])]:
+                s = s.replace("\n", "")
+                print(float(s))

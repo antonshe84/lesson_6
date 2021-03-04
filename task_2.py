@@ -76,3 +76,4 @@ for key, val in ip_count_dict.items():
         max_ip[1] = val
         max_ip[0] = key
 print(f"А вот и спамер года: IP {max_ip[0]} с колличеством запросов {max_ip[1]}")
+

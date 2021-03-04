@@ -40,9 +40,6 @@ if __name__ == '__main__':
     print(f'Файл хобби: {file_name_hobby}')
     print(f'Файл результата объеденения: {result_file}')
 
-
-
-
     with open(file_name_users, "r", encoding="utf-8") as users_file:
         with open(file_name_hobby, "r", encoding="utf-8") as hobby_file:
             with open(result_file, "w", encoding="utf-8") as j:
@@ -82,4 +79,3 @@ if __name__ == '__main__':
     with open(result_file, "r", encoding="utf-8") as j:
         dict_control = json.load(j)
     print(dict_control)
-
