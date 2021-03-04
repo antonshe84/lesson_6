@@ -46,7 +46,7 @@ with open("nginx_logs.txt", "r", encoding="utf-8") as log_file:
                 break
             st = txt.split()
             t1 = st[5].replace('"', '')
-            parce_file.writelines(f"{st[0]} {t1} {st[6]}\n")
+            parce_file.writelines([f"{st[0]} {t1} {st[6]}\n"])
 print("Парсинг завершен, результат в файле 'nginx_logs_parce.txt'")
 
 # Из полученного файла nginx_logs_parce получаем словарь вида: {"уникальныq IP адрес": колличество его повторений}

@@ -45,10 +45,10 @@ if __name__ == '__main__':
 
     with open(file_name_users, "r", encoding="utf-8") as users_file:
         with open(file_name_hobby, "r", encoding="utf-8") as hobby_file:
-            with open(result_file, "w+", encoding="utf-8") as j:
+            with open(result_file, "w", encoding="utf-8") as j:
                 """ Формируем словарь непосредственно в файле, т.к. при размере файлов users и hobby больше ОЗУ
                 # словарь превысит размер ОЗУ """
-                j.writelines("{")
+                j.writelines(["{"])
                 # получаем словарь имени в виде ['фам', 'имя', 'отч']
                 # словарь выбран для дальнейшего загрузки с помощью json
                 user_0 = users_file.readline().replace("\n", "").split(",")
@@ -56,7 +56,7 @@ if __name__ == '__main__':
                 hobby_0 = hobby_file.readline().replace("\n", "").split(",")
                 # далее читаем и записываем построчно
                 while user_0:
-                    j.writelines(f'"{user_0}": "{hobby_0}"')
+                    j.writelines([f'"{user_0}": "{hobby_0}"'])
                     u = users_file.readline().replace("\n", "")
                     if u == '':
                         user_0 = []
@@ -74,9 +74,9 @@ if __name__ == '__main__':
                     # Если hobby закончились, то ставим None
                     if hobby_0 == []: hobby_0 = None
                     # записываем разделитель словаря (для корректной записи json)
-                    if user_0 != [] and hobby_0 != []: j.writelines(", ")
+                    if user_0 != [] and hobby_0 != []: j.writelines([", "])
 
-                j.writelines("}")
+                j.writelines(["}"])
 
     # Читаем полученный json файл
     with open(result_file, "r", encoding="utf-8") as j:
