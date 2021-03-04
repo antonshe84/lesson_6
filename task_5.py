@@ -25,23 +25,61 @@
 import json, sys
 
 if __name__ == '__main__':
-    with open("users.csv", "r", encoding="utf-8") as users_file:
-        with open("hobby.csv", "r", encoding="utf-8") as hobby_file:
-            with open("users_hobby.json", "w+", encoding="utf-8") as j:
+    # Можно задать аргументы
+    # Пример: task_5.py D:\Download\user.csv C:\Python\hobby.csv D:\out.json
+    args = sys.argv
+    if len(args) == 4:
+        file_name_users = args[1]
+        file_name_hobby = args[2]
+        result_file = args[3]
+    else:
+        file_name_users = "users.csv"
+        file_name_hobby = "hobby.csv"
+        result_file = "users_hobby.json"
+    print(f'Файл пользователей: {file_name_users}')
+    print(f'Файл хобби: {file_name_hobby}')
+    print(f'Файл результата объеденения: {result_file}')
+
+
+
+
+    with open(file_name_users, "r", encoding="utf-8") as users_file:
+        with open(file_name_hobby, "r", encoding="utf-8") as hobby_file:
+            with open(result_file, "w+", encoding="utf-8") as j:
+                """ Формируем словарь непосредственно в файле, т.к. при размере файлов users и hobby больше ОЗУ
+                # словарь превысит размер ОЗУ """
                 j.writelines("{")
+                # получаем словарь имени в виде ['фам', 'имя', 'отч']
+                # словарь выбран для дальнейшего загрузки с помощью json
                 user_0 = users_file.readline().replace("\n", "").split(",")
+                # получаем словарь хобби в виде ['хоб1', 'хоб2', 'хоб3']
                 hobby_0 = hobby_file.readline().replace("\n", "").split(",")
-                while user_0 != ['']:
+                # далее читаем и записываем построчно
+                while user_0:
                     j.writelines(f'"{user_0}": "{hobby_0}"')
-                    user_0 = users_file.readline().replace("\n", "").split(",")
-                    hobby_0 = hobby_file.readline().replace("\n", "").split(",")
-                    if user_0 == [''] and hobby_0 != ['']: sys.exit(1)
-                    if hobby_0 == ['']: hobby_0 = ["None"]
-                    if user_0 != [''] and hobby_0 != ['']: j.writelines(", ")
+                    u = users_file.readline().replace("\n", "")
+                    if u == '':
+                        user_0 = []
+                    else:
+                        user_0 = u.split(",")
+
+                    h = hobby_file.readline().replace("\n", "")
+                    if h == '':
+                        hobby_0 = []
+                    else:
+                        hobby_0 = h.split(",")
+
+                    # Если user закончились, а hobby еще есть, то возвращаем код 1
+                    if user_0 == [] and hobby_0 != []: sys.exit(1)
+                    # Если hobby закончились, то ставим None
+                    if hobby_0 == []: hobby_0 = None
+                    # записываем разделитель словаря (для корректной записи json)
+                    if user_0 != [] and hobby_0 != []: j.writelines(", ")
 
                 j.writelines("}")
 
-    with open("users_hobby.json", "r", encoding="utf-8") as j:
+    # Читаем полученный json файл
+    with open(result_file, "r", encoding="utf-8") as j:
         dict_control = json.load(j)
     print(dict_control)
 
